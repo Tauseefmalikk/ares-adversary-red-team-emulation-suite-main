@@ -107,6 +107,16 @@ elif [ -f "$DIR/Artt-main/ART-main/scripts/Start-ARTAutomation.ps1" ]; then
     TARGET_SCRIPT="$DIR/Artt-main/ART-main/scripts/Start-ARTAutomation.ps1"
 fi
 
+# Dynamic search in any subfolder (in case folders were renamed)
+if [ -z "$TARGET_SCRIPT" ]; then
+    for d in "$DIR"/*/; do
+        if [ -f "${d}scripts/Start-ARTAutomation.ps1" ]; then
+            TARGET_SCRIPT="${d}scripts/Start-ARTAutomation.ps1"
+            break
+        fi
+    done
+fi
+
 if [ -z "$TARGET_SCRIPT" ]; then
     echo "[ERROR] Could not find Start-ARTAutomation.ps1!"
     echo "Please ensure the repository files are intact."

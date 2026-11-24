@@ -35,6 +35,15 @@ if exist "%~dp0ART-main\scripts\Start-ARTAutomation.ps1" (
     set "TARGET_SCRIPT=%~dp0..\ART-main\scripts\Start-ARTAutomation.ps1"
 )
 
+:: Dynamic search in any subfolder (in case folders were renamed)
+if "%TARGET_SCRIPT%"=="" (
+    for /d %%D in ("%~dp0*") do (
+        if exist "%%D\scripts\Start-ARTAutomation.ps1" (
+            set "TARGET_SCRIPT=%%D\scripts\Start-ARTAutomation.ps1"
+        )
+    )
+)
+
 if "%TARGET_SCRIPT%"=="" (
     echo.
     echo [ERROR] Could not find Start-ARTAutomation.ps1!
